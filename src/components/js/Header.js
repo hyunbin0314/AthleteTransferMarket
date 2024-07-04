@@ -1,9 +1,9 @@
 import React from 'react';
-import './Header.css'; // CSS 파일 import
-import logo from '../assets/Logo.png'; // 로고 이미지 import
-import searchIcon from '../assets/Search.png'; // 검색 아이콘 이미지 import
-import mypageIcon from '../assets/My.png'; // 마이페이지 아이콘 이미지 import
-import detailedSearchIcon from '../assets/DetailSearch.png'; // 상세검색 아이콘 이미지 import
+import '../css/Header.css'; // CSS 파일 import
+import logo from '../../assets/Header/Logo.png' // 로고 이미지 import
+import searchIcon from '../../assets/Header/Search.png'; // 검색 아이콘 이미지 import
+import mypageIcon from '../../assets/Header/My.png'; // 마이페이지 아이콘 이미지 import
+import detailedSearchIcon from '../../assets/Header/DetailSearch.png'; // 상세검색 아이콘 이미지 import
 
 const Header = () => {
   return (
