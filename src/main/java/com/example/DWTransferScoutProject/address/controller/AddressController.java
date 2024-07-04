@@ -28,6 +28,7 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         addressService.deleteAddress(id);
+        System.out.println("1");
         return ResponseEntity.noContent().build();
     }
 }
