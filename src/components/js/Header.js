@@ -21,7 +21,7 @@ const Header = () => {
             <img src={mypageIcon} alt="My Page" className="Header-mypageIcon" />
             <span className="Header-tooltip">마이페이지</span>
           </div>
-          <button className="Header-loginButton">로그인1</button>
+          <button className="Header-loginButton">로그인</button>
         </div>
       </div>
     </header>
