@@ -10,6 +10,7 @@ public class EmailService {
     private static final int MAX_EMAIL_ASSOCIATED_ACCOUNTS = 1;
 
     // 이메일 인증 코드를 생성하는 메서드
+    // 테스트
     public int generateVerificationCode() {
         Random random = new Random();
         return random.nextInt(888888) + 111111;
