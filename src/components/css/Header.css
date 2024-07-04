@@ -1,0 +1,131 @@
+/* 헤더 스타일 */
+.Header-header {
+  background-color: #f1eeee; /* 배경색 */
+  color: white;
+  width: 80%;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 컨테이너 스타일 */
+.Header-container {
+  display: flex; /* 가로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  height: 150px;
+}
+
+/* 링크 스타일 */
+.Header-Link {
+  font-size: 12px;
+  color: black;
+  margin-right: 40px;
+  margin-top: 50px;
+}
+
+/* 로고 이미지 스타일 */
+.Header-logoImage {
+  height: 50px; /* 로고 높이 */
+  margin-left: 30px;
+  margin-right: 5px;
+}
+
+/* 검색 컨테이너 스타일 */
+.Header-searchContainer {
+  display: flex;
+  align-items: center;
+  width: 1800px; /* 텍스트 박스 넓이 */
+}
+
+/* 검색 입력 스타일 */
+.Header-searchInput {
+  flex: 1; /* 남은 공간을 차지하도록 설정 */
+  padding: 10px; /* 패딩을 키워서 입력 필드를 크게 만듭니다 */
+  font-size: 1.2rem; /* 폰트 크기를 키웁니다 */
+  border-radius: 4px; /* 테두리 둥글게 */
+  border: none; /* 테두리 제거 */
+}
+
+/* 검색 아이콘 스타일 */
+.Header-searchIcon {
+  width: 20px; /* 아이콘 너비 */
+  height: 20px; /* 아이콘 높이 */
+  margin-left: -30px; /* 아이콘이 입력 필드 안으로 들어가도록 마진 조정 */
+  cursor: pointer;
+}
+
+/* 마이페이지 아이콘 컨테이너 스타일 */
+.Header-mypageIconContainer {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+
+/* 마이페이지 아이콘 스타일 */
+.Header-mypageIcon {
+  width: 30px; /* 아이콘 너비 */
+  height: 30px; /* 아이콘 높이 */
+  cursor: pointer;
+}
+
+/* 상세검색 아이콘 컨테이너 스타일 */
+.Header-detailedSearchIconContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* 상세검색 아이콘 스타일 */
+.Header-detailedSearchIcon {
+  width: 30px; /* 아이콘 너비 */
+  height: 30px; /* 아이콘 높이 */
+  margin-left: 20px; /* 아이콘과 검색 아이콘 사이의 마진 조정 */
+  cursor: pointer;
+}
+
+/* 툴팁 스타일 */
+.Header-tooltip {
+  visibility: hidden; /* 초기에는 툴팁을 숨깁니다 */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 10px); /* 아이콘 아래에 툴팁 위치, 여분의 여백 추가 */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0; /* 초기에는 툴팁을 투명하게 설정 */
+  white-space: nowrap; /* 툴팁 텍스트를 가로로 표시 */
+  transition: opacity 0.3s; /* 툴팁이 나타나는 트랜지션 효과 */
+}
+
+/* 마이페이지 아이콘 컨테이너 스타일 */
+.Header-mypageIconContainer {
+  display: flex;
+  align-items: center;
+  margin-left: 50px; /* 마이페이지 아이콘과의 마진 조정 */
+  position: relative; /* 툴팁 위치를 설정하기 위해 상대 위치 설정 */
+}
+
+.Header-mypageIconContainer:hover .Header-tooltip {
+  visibility: visible; /* 마우스를 올리면 툴팁이 보이도록 설정 */
+  opacity: 1; /* 툴팁이 투명하지 않도록 설정 */
+}
+
+
+/* 로그인 버튼 스타일 */
+.Header-loginButton {
+  margin-left: 40px; /* 마이페이지 아이콘과의 마진 조정 */
+  margin-right: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: #5ca5ff;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.Header-loginButton:hover {
+  background-color: #3d95f3;
+}
