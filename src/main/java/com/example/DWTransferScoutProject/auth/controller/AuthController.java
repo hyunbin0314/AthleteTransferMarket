@@ -31,7 +31,6 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-
     // 로그인 API
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDto loginDao, HttpServletResponse response) {
