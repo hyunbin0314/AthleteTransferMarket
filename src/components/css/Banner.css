@@ -1,0 +1,28 @@
+.Banner-container {
+    background-color: #e74141;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    width: 80%;
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  
+  .Banner-top {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .Banner-Link {
+    margin-top: 10px;
+  }
+  
+  .Banner-Link a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .Banner-Link a:hover {
+    color: #007bff; /* 링크에 마우스를 올렸을 때 색상 변경 */
+  }
+  
