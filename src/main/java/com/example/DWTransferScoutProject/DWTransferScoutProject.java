@@ -1,13 +1,13 @@
-package com.example.athletetransfermarket;
+package com.example.DWTransferScoutProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AthleteTransferMarketApplication {
+public class DWTransferScoutProject {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AthleteTransferMarketApplication.class, args);
-	}
 
+		SpringApplication.run(DWTransferScoutProject.class, args);
+	}
 }
