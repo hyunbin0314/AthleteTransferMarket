@@ -3,7 +3,6 @@ package com.example.DWTransferScoutProject.user.service;
 import com.example.DWTransferScoutProject.address.dto.AddressDto;
 import com.example.DWTransferScoutProject.address.entity.Address;
 import com.example.DWTransferScoutProject.address.service.AddressService;
-import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
 import com.example.DWTransferScoutProject.auth.service.AuthService;
 import com.example.DWTransferScoutProject.common.account.service.BaseAccountService;
 import com.example.DWTransferScoutProject.user.dto.UserDto;
@@ -27,30 +26,27 @@ public class UserService implements BaseAccountService<User, UserDto> {
     private final AddressService addressService;
     private final AuthService authService;
 
-    // 회원가입 메서드
     @Override
-    public User signUp(UserDto userDto) {
-        if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
-            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
+    public User createAccount(UserDto userDto) {
         User user = User.builder()
-                .accountId(userDto.getUserId())
+                .accountId(userDto.getAccountId())
+                .password(userDto.getPassword())
+                .email(userDto.getEmail())
+                .accountRole(userDto.getAccountRole())
                 .username(userDto.getUsername())
-                .password(passwordEncoder.encode(userDto.getPassword()))
                 .birthdate(userDto.getBirthdate())
                 .gender(userDto.getGender())
-                .email(userDto.getEmail())
                 .contact(userDto.getContact())
-                .accountType(ApplicationRoleEnum.USER)
+                .address(addressService.toEntity(userDto.getAddress())) // AddressService를 활용하여 변환
                 .build();
-        return saveAccount(user);
+
+        return userRepository.save(user); // Save the user entity to the repository
     }
 
-    private User saveAccount(User user) {
-        if (userRepository.findByAccountId(user.getAccountId()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 아이디 입니다: " + user.getAccountId());
-        }
-        return userRepository.save(user);
+    @Override
+    public UserDto saveAccount(UserDto userDto) {
+        User user = createAccount(userDto); // Create the User entity
+        return new UserDto(user); // Map the User entity to UserDto and return it
     }
 
     @Override
@@ -79,8 +75,8 @@ public class UserService implements BaseAccountService<User, UserDto> {
                 address
         );
 
-        if (userDto.getAccountType() != null) {
-            existingUser.updateAccountType(userDto.getAccountType());
+        if (userDto.getAccountRole() != null) {
+            existingUser.updateAccountRole(userDto.getAccountRole());
         }
 
         User updatedUser = userRepository.save(existingUser);
@@ -124,7 +120,7 @@ public class UserService implements BaseAccountService<User, UserDto> {
     public UserDto mapToDTO(User user) {
         return UserDto.builder()
                 .id(user.getId())
-                .userId(user.getAccountId())
+                .accountId(user.getAccountId())
                 .username(user.getUsername())
                 .password(null)
                 .birthdate(user.getBirthdate())
@@ -132,7 +128,7 @@ public class UserService implements BaseAccountService<User, UserDto> {
                 .email(user.getEmail())
                 .contact(user.getContact())
                 .address(user.getAddress() != null ? new AddressDto(user.getAddress()) : null)
-                .accountType(user.getAccountType())
+                .accountRole(user.getAccountRole())
                 .build();
     }
 

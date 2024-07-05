@@ -24,6 +24,7 @@ com.example.DWTransferScoutProject
 ├── common
 │   ├── account
 │   │   ├── dto
+│   │   │   ├── BaseAccountDto.java
 │   │   │   └── LoginDto.java
 │   │   ├── entity
 │   │   │   └── BaseAccount.java

@@ -13,11 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class SuperAdminController {
     private final SuperAdminService adminService;
 
-    @PostMapping
-    public ResponseEntity<SuperAdminDto> createAdmin(@RequestBody SuperAdminDto adminDto) {
-        return ResponseEntity.ok(adminService.mapToDTO(adminService.signUp(adminDto)));
-    }
-
     // Admin 업데이트 API
     @PutMapping("/{id}")
     public ResponseEntity<SuperAdminDto> updateAdmin(@PathVariable Long id, @RequestBody SuperAdminDto adminDto) {

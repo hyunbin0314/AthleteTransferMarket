@@ -1,6 +1,5 @@
 package com.example.DWTransferScoutProject.superadmin.service;
 
-import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
 import com.example.DWTransferScoutProject.auth.service.AuthService;
 import com.example.DWTransferScoutProject.superadmin.dto.SuperAdminDto;
 import com.example.DWTransferScoutProject.superadmin.entity.SuperAdmin;
@@ -23,23 +22,22 @@ public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAd
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 회원가입 메서드
     @Override
-    public SuperAdmin signUp(SuperAdminDto superAdminDto) {
+    public SuperAdmin createAccount(SuperAdminDto superAdminDto) {
         SuperAdmin superAdmin = SuperAdmin.builder()
-                .accountId(superAdminDto.getSuperAdminId())
-                .password(passwordEncoder.encode(superAdminDto.getPassword()))
+                .accountId(superAdminDto.getAccountId())
+                .password(superAdminDto.getPassword())
                 .email(superAdminDto.getEmail())
-                .accountType(ApplicationRoleEnum.SUPER_ADMIN)
+                .accountRole(superAdminDto.getAccountRole())
                 .build();
-        return saveAccount(superAdmin);
+
+        return superAdminRepository.save(superAdmin); // Save the super admin entity to the repository
     }
 
-    private SuperAdmin saveAccount(SuperAdmin superAdmin) {
-        if (superAdminRepository.findByAccountId(superAdmin.getAccountId()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 아이디 입니다: " + superAdmin.getAccountId());
-        }
-        return superAdminRepository.save(superAdmin);
+    @Override
+    public SuperAdminDto saveAccount(SuperAdminDto superAdminDto) {
+        SuperAdmin superAdmin = createAccount(superAdminDto); // Create the SuperAdmin entity
+        return new SuperAdminDto(superAdmin); // Map the SuperAdmin entity to SuperAdminDto and return it
     }
 
     public void updatePassword(Long id, String newPassword) {
@@ -61,7 +59,7 @@ public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAd
 
         existingSuperAdmin.updateSuperAdminInfo(
                 superAdminDto.getEmail(),
-                superAdminDto.getAccountType()
+                superAdminDto.getAccountRole()
         );
 
         SuperAdmin updatedSuperAdmin = superAdminRepository.save(existingSuperAdmin);
@@ -102,13 +100,13 @@ public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAd
     }
 
     @Override
-    public SuperAdminDto mapToDTO(SuperAdmin admin) {
+    public SuperAdminDto mapToDTO(SuperAdmin superAdmin) {
         return SuperAdminDto.builder()
-                .id(admin.getId())
-                .superAdminId(admin.getAccountId())
+                .id(superAdmin.getId())
+                .accountId(superAdmin.getAccountId())
                 .password(null) // 비밀번호는 반환하지 않음
-                .email(admin.getEmail())
-                .accountType(admin.getAccountType())
+                .email(superAdmin.getEmail())
+                .accountRole(superAdmin.getAccountRole())
                 .build();
     }
 
@@ -117,8 +115,8 @@ public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAd
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        if (userDto.getAccountType() != null) {
-            existingUser.updateAccountType(userDto.getAccountType());
+        if (userDto.getAccountRole() != null) {
+            existingUser.updateAccountRole(userDto.getAccountRole());
         }
 
         User updatedUser = userRepository.save(existingUser);
@@ -128,8 +126,8 @@ public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAd
     public UserDto mapToUserDTO(User user) {
         return UserDto.builder()
                 .id(user.getId())
-                .userId(user.getAccountId())
-                .accountType(user.getAccountType())
+                .accountId(user.getAccountId())
+                .accountRole(user.getAccountRole())
                 .username(user.getUsername())
                 .password(null)
                 .birthdate(user.getBirthdate())

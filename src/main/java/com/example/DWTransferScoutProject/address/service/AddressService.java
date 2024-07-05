@@ -28,6 +28,18 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
+    public Address toEntity(AddressDto addressDto) {
+        if (addressDto == null) {
+            return null;
+        }
+        return Address.builder()
+                .street(addressDto.getStreet())
+                .city(addressDto.getCity())
+                .zipCode(addressDto.getZipCode())
+                .country(addressDto.getCountry())
+                .build();
+    }
+
     public void deleteAddress(Long id) {
         addressRepository.deleteById(id);
     }

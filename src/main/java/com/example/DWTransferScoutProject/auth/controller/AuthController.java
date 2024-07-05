@@ -1,10 +1,15 @@
 package com.example.DWTransferScoutProject.auth.controller;
 
 import com.example.DWTransferScoutProject.auth.security.JwtUtil;
+import com.example.DWTransferScoutProject.common.account.dto.BaseAccountDto;
 import com.example.DWTransferScoutProject.common.account.dto.LoginDto;
 import com.example.DWTransferScoutProject.auth.service.AuthService;
+import com.example.DWTransferScoutProject.common.account.service.BaseAccountService;
+import com.example.DWTransferScoutProject.superadmin.dto.SuperAdminDto;
+import com.example.DWTransferScoutProject.superadmin.service.SuperAdminService;
 import com.example.DWTransferScoutProject.user.dto.UserDto;
 import com.example.DWTransferScoutProject.user.entity.User;
+import com.example.DWTransferScoutProject.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,11 +29,36 @@ import java.util.Optional;
 public class AuthController {
     private final AuthService authService;
     private final JwtUtil jwtUtil;
+    private final UserService userService;
+    private final SuperAdminService adminService;
 
     @Autowired
-    public AuthController(AuthService authService, JwtUtil jwtUtil) {
+    public AuthController(AuthService authService, JwtUtil jwtUtil, UserService userService, SuperAdminService adminService) {
         this.authService = authService;
         this.jwtUtil = jwtUtil;
+        this.userService = userService;
+        this.adminService = adminService;
+    }
+
+    // 회원가입
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody BaseAccountDto accountDto) {
+        try {
+            if (accountDto instanceof UserDto) {
+                authService.signUp((UserDto) accountDto, userService);
+            } else if (accountDto instanceof SuperAdminDto) {
+                authService.signUp((SuperAdminDto) accountDto, adminService);
+            } else {
+                // 추가적인 계정 유형이 있을 경우 여기서 처리
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("알 수 없는 계정 유형입니다.");
+            }
+
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 중 오류가 발생했습니다.");
+        }
     }
 
     // 로그인 API

@@ -27,7 +27,7 @@ public class User implements BaseAccount {
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private ApplicationRoleEnum accountType;
+    private ApplicationRoleEnum accountRole;
 
     @Column(nullable = false)
     private String username; // 회원의 본명
@@ -44,9 +44,9 @@ public class User implements BaseAccount {
     private Address address;
 
     @Builder
-    public User(ApplicationRoleEnum accountType, String accountId, String username, String password,
+    public User(ApplicationRoleEnum accountRole, String accountId, String username, String password,
                 String birthdate, GenderEnum gender, String email, String contact, Address address) {
-        this.accountType = accountType;
+        this.accountRole = accountRole;
         this.accountId = accountId;
         this.username = username;
         this.password = password;
@@ -73,9 +73,9 @@ public class User implements BaseAccount {
         }
     }
 
-    public void updateAccountType(ApplicationRoleEnum userType) {
-        if (userType != null) {
-            this.accountType = userType;
+    public void updateAccountRole(ApplicationRoleEnum accountRole) {
+        if (accountRole != null) {
+            this.accountRole = accountRole;
         }
     }
 
@@ -86,6 +86,6 @@ public class User implements BaseAccount {
 
     @Override
     public ApplicationRoleEnum getAccountRole() {
-        return this.accountType;
+        return this.accountRole;
     }
 }

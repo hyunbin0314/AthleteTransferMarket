@@ -26,22 +26,22 @@ public class SuperAdmin implements BaseAccount {
     private String email;
 
     @Enumerated(value = EnumType.STRING)
-    private ApplicationRoleEnum accountType;
+    private ApplicationRoleEnum accountRole;
 
     @Builder
-    public SuperAdmin(ApplicationRoleEnum accountType, String accountId, String password, String email) {
-        this.accountType = accountType;
+    public SuperAdmin(ApplicationRoleEnum accountRole, String accountId, String password, String email) {
+        this.accountRole = accountRole;
         this.accountId = accountId;
         this.password = password;
         this.email = email;
     }
 
-    public void updateSuperAdminInfo(String email, ApplicationRoleEnum accountType) {
+    public void updateSuperAdminInfo(String email, ApplicationRoleEnum accountRole) {
         if (email != null) {
             this.email = email;
         }
-        if (accountType != null) {
-            this.accountType = accountType;
+        if (accountRole != null) {
+            this.accountRole = accountRole;
         }
     }
 
@@ -52,9 +52,9 @@ public class SuperAdmin implements BaseAccount {
         }
     }
 
-    public void updateAccountType(ApplicationRoleEnum userType) {
-        if (userType != null) {
-            this.accountType = userType;
+    public void updateAccountRole(ApplicationRoleEnum accountRole) {
+        if (accountRole != null) {
+            this.accountRole = accountRole;
         }
     }
 
@@ -65,6 +65,6 @@ public class SuperAdmin implements BaseAccount {
 
     @Override
     public ApplicationRoleEnum getAccountRole() {
-        return this.accountType;
+        return this.accountRole;
     }
 }

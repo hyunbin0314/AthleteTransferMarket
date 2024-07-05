@@ -1,39 +1,39 @@
 package com.example.DWTransferScoutProject.user.dto;
 
 import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
+import com.example.DWTransferScoutProject.common.account.dto.BaseAccountDto;
 import com.example.DWTransferScoutProject.user.entity.GenderEnum;
 import com.example.DWTransferScoutProject.user.entity.User;
 import com.example.DWTransferScoutProject.address.dto.AddressDto;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserDto {
+public class UserDto implements BaseAccountDto {
     private Long id;
-    private String userId;
-    private String username;
+    private String accountId;
     private String password;
     private String confirmPassword;
+    private String email;
+    private ApplicationRoleEnum accountRole;
+    private String username;
     private String birthdate;
     private GenderEnum gender;
-    private String email;
     private String contact;
     private AddressDto address;
-    private ApplicationRoleEnum accountType;
 
     public UserDto(User user) {
         this.id = user.getId();
-        this.userId = user.getAccountId();
-        this.username = user.getUsername();
+        this.accountId = user.getAccountId();
         this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.accountRole = user.getAccountRole();
+        this.username = user.getUsername();
         this.birthdate = user.getBirthdate();
         this.gender = user.getGender();
-        this.email = user.getEmail();
         this.contact = user.getContact();
-        this.address = new AddressDto(user.getAddress());
-        this.accountType = user.getAccountType();
+        this.address = user.getAddress() != null ? new AddressDto(user.getAddress()) : null;
     }
 }

@@ -4,7 +4,8 @@ import com.example.DWTransferScoutProject.common.account.entity.BaseAccount;
 import java.util.Optional;
 
 public interface BaseAccountService<T extends BaseAccount, D> {
-    T signUp(D dto);
+    D saveAccount(D accountDto);
+    T createAccount(D accountDto);
     void deleteAccount(Long id);
     D updateAccount(Long id, D dto);
     Optional<T> findById(Long id);
