@@ -35,11 +35,10 @@ public class Auction {
     private LocalDateTime createTime;
 
     private LocalDateTime deadline;
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bid> bidList;
 
-    @OneToOne(mappedBy = "auction")
+    @OneToOne(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
     private SuccessfulBid successfulBid;
-
 
 }

@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,5 +55,16 @@ public class AuctionController {
         AuctionDto auctionDto1 = auctionService.createAuction(auctionDto, accountDetails);
         return ResponseEntity.ok(auctionDto1);
     }
+
+    @DeleteMapping("/auction/{id}")
+    public ResponseEntity<?> deleteAuction(@PathVariable("id") Long id, @AuthenticationPrincipal AccountDetailsImpl accountDetails) {
+        Optional<Auction> optionalAuction = auctionRepository.findById(id);
+
+        auctionRepository.deleteById(id);
+        return ResponseEntity.ok("삭제완료");
+
+
+    }
+
 
 }

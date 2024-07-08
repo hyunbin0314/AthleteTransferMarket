@@ -24,6 +24,7 @@ public class SuccessfulBid {
     private Auction auction;
 
     @ManyToOne
+    @JoinColumn(name = "users_jd")
     private User user;
 
 

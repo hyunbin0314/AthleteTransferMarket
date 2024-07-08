@@ -37,14 +37,23 @@ public class BidController {
 
 
 
+    // 로그인한 유저가 입찰을 하면 BidEntity에 경매글에 대한 입찰자 데이터를 생성후 UserDto를 리턴
     @PostMapping("/bid")
     public ResponseEntity<?> doBid(@AuthenticationPrincipal AccountDetailsImpl accountDetails, @RequestBody Auction auction) {
+        Auction auction1 = auctionRepository.findById(auction.getId()).orElse(null); // 경매 정보 가져오기
 
-        Auction auction1 = auctionRepository.findById(auction.getId()).get();
+        if(auction1.getTransferFee() > auction.getTransferFee()) {
+            System.out.println("현재 : " + auction1.getTransferFee());
+            System.out.println("입찰료 : " + auction.getTransferFee());
+            return ResponseEntity.badRequest().body("현재 이적료보다 더 큰 금액을 써야합니다.");
+        }
+
+
+        // 입찰 정보 업데이트
         auction1.setTransferFee(auction.getTransferFee());
-
         auctionRepository.save(auction1);
 
+        // 입찰 정보 저장
         Bid bid = new Bid();
         bid.setBidTime(LocalDateTime.now());
         bid.setUser((User) accountDetails.getAccount());
@@ -53,16 +62,17 @@ public class BidController {
 
         bidRepository.save(bid);
 
+        // 사용자 DTO 생성 및 반환
         UserDto userDto = userService.mapToDTO(bid.getUser());
-
-
         BidDto bidDto = new BidDto();
         bidDto.setUserDto(userDto);
 
         return ResponseEntity.ok(bidDto.getUserDto());
-
     }
 
+
+
+    // 경매글 클릭시 글에 대한 id값을 받고 입찰자의 userDto를 반환
     @GetMapping("biduser")
     public ResponseEntity<?> bidUser(@RequestParam Long id) {
         System.out.println("받은 id: " + id);

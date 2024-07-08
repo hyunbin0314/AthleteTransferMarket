@@ -30,7 +30,7 @@ public AuctionDto createAuction(AuctionDto auctionDto, AccountDetailsImpl accoun
     auction.setTitle(auctionDto.getTitle());
     auction.setContents(auctionDto.getContents());
     auction.setCreateTime(LocalDateTime.now());
-    auction.setDeadline(LocalDateTime.now().plusDays(7));
+    auction.setDeadline(LocalDateTime.now().plusSeconds(10));
     auction.setTransferFee(auctionDto.getTransferFee());
 
 
@@ -55,7 +55,7 @@ public AuctionDto createAuction(AuctionDto auctionDto, AccountDetailsImpl accoun
 
 
     // Iterable<Auction>를 List<AuctionDto>로 변환
-    // 멤버속성은 오직 UserId만 반환한다.
+    // 멤버속성은 오직 accountId만 반환한다.
     public List<AuctionDto> toDtoList(Iterable<Auction> auctions) {
         List<AuctionDto> auctionDtos = new ArrayList<>();
         for (Auction auction : auctions) {

@@ -41,8 +41,15 @@ public class DataInitializer implements CommandLineRunner {
         user1.setAccountId("user1");
         user1.setPassword(passwordEncoder.encode("123"));
         user1.setAccountType(ApplicationRoleEnum.USER);
-        user1.setUsername("김민균");
+        user1.setUsername("김민균1");
         userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setAccountId("user2");
+        user2.setPassword(passwordEncoder.encode("123"));
+        user2.setAccountType(ApplicationRoleEnum.USER);
+        user2.setUsername("김민균2");
+        userRepository.save(user2);
 
         Auction auction1 = new Auction();
         auction1.setUser(userRepository.findById(1L).get());

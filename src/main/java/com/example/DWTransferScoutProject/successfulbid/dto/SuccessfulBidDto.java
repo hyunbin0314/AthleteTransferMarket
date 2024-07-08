@@ -13,4 +13,6 @@ public class SuccessfulBidDto {
     private Long id;
     private AuctionDto auctionDto;
     private User user;
+    private Long auctionId;
+    private Long bidUserId;
 }
