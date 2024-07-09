@@ -6,13 +6,13 @@ const Banner = () => {
         <div className="Banner-container">
             <div className="Banner-top">
                 <div className="Banner-Link">
-                    <a href="/">회사 소개</a>
-                    <a href="/">Investor Relations</a>
-                    <a href="/">입점/제휴문의</a>
-                    <a href="/">공지사항</a>
-                    <a href="/">고객의 소리</a>
+                    <a href="/">News</a>
+                    <a href="/">이적통계</a>
+                    <a href="/">경매</a>
+                    <a href="/">대회일정</a>
+                    <a href="/">커뮤티니</a>
+                    <a href="/">내 계약</a>
                     <a href="/">이용약관</a>
-                    <a href="/">개인정보처리방침</a>
                 </div>
             </div>
         </div>
