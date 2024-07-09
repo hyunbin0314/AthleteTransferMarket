@@ -18,7 +18,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SuperAdminService implements BaseAccountService<SuperAdmin, SuperAdminDto> {
     private final SuperAdminRepository superAdminRepository;
-    private final AuthService authService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

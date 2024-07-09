@@ -30,13 +30,15 @@ public class AuthService {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    private final SuperAdminRepository superAdminRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
     private final AddressService addressService;
 
     @Transactional
     public <T extends BaseAccountDto> T signUp(T accountDto, BaseAccountService<?, T> accountService) {
+        if (accountDto.getAccountId() == null || accountDto.getPassword() == null || accountDto.getEmail() == null) {
+            throw new IllegalArgumentException("필수 필드가 누락되었습니다.");
+        }
+
         if (accountService.findByAccountId(accountDto.getAccountId()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 아이디 입니다: " + accountDto.getAccountId());
         }
@@ -47,16 +49,6 @@ public class AuthService {
 
         String encodedPassword = passwordEncoder.encode(accountDto.getPassword());
         accountDto.setPassword(encodedPassword);
-
-        // 주소 저장
-        if (accountDto instanceof UserDto) {
-            UserDto userDto = (UserDto) accountDto;
-            Address address = null;
-            if (userDto.getAddress() != null) {
-                address = addressService.saveAddress(userDto.getAddress());
-            }
-            userDto.setAddress(address != null ? new AddressDto(address) : null);
-        }
 
         return accountService.saveAccount(accountDto);
     }

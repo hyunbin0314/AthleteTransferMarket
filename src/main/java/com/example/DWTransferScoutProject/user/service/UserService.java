@@ -3,6 +3,7 @@ package com.example.DWTransferScoutProject.user.service;
 import com.example.DWTransferScoutProject.address.dto.AddressDto;
 import com.example.DWTransferScoutProject.address.entity.Address;
 import com.example.DWTransferScoutProject.address.service.AddressService;
+import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
 import com.example.DWTransferScoutProject.auth.service.AuthService;
 import com.example.DWTransferScoutProject.common.account.service.BaseAccountService;
 import com.example.DWTransferScoutProject.user.dto.UserDto;
@@ -24,20 +25,24 @@ public class UserService implements BaseAccountService<User, UserDto> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AddressService addressService;
-    private final AuthService authService;
 
     @Override
     public User createAccount(UserDto userDto) {
+        Address address = null;
+        if (userDto.getAddress() != null) {
+            address = addressService.saveAddress(userDto.getAddress());
+        }
+
         User user = User.builder()
                 .accountId(userDto.getAccountId())
-                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
                 .email(userDto.getEmail())
-                .accountRole(userDto.getAccountRole())
+                .accountRole(ApplicationRoleEnum.USER)
                 .username(userDto.getUsername())
                 .birthdate(userDto.getBirthdate())
                 .gender(userDto.getGender())
                 .contact(userDto.getContact())
-                .address(addressService.toEntity(userDto.getAddress())) // AddressService를 활용하여 변환
+                .address(address) // AddressService를 활용하여 변환된 Address 사용
                 .build();
 
         return userRepository.save(user); // Save the user entity to the repository

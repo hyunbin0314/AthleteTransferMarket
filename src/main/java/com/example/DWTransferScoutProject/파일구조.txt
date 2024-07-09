@@ -14,11 +14,11 @@ com.example.DWTransferScoutProject
 │   ├── controller
 │   │   └── AuthController.java
 │   ├── security
-│   │   ├── JwtAuthFilter.java
-│   │   ├── JwtUtil.java
 │   │   ├── UserDetailsImpl.java
 │   │   ├── UserDetailsServiceImpl.java
-│   │   └── UserRoleEnum.java
+│   │   ├── UserRoleEnum.java
+│   │   ├── JwtAuthFilter.java
+│   │   └── JwtUtil.java
 │   └── service
 │       └── AuthService.java
 ├── common
@@ -34,10 +34,9 @@ com.example.DWTransferScoutProject
 │   │       └── BaseAccountService.java
 │   ├── config
 │   │   └── RestClientConfig.java
-│   ├── exception
-│   │   ├── GlobalExceptionHandler.java
-│   │   └── ResourceNotFoundException.java
-│   └── utils
+│   └── exception
+│       ├── GlobalExceptionHandler.java
+│       └── ResourceNotFoundException.java
 ├── config
 │   ├── security
 │   │   └── SpringSecurityConfig.java

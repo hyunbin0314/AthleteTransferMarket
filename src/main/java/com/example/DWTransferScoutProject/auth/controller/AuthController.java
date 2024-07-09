@@ -44,12 +44,15 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody BaseAccountDto accountDto) {
         try {
+            if (accountDto.getAccountId() == null || accountDto.getPassword() == null || accountDto.getEmail() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("필수 필드가 누락되었습니다.");
+            }
+
             if (accountDto instanceof UserDto) {
                 authService.signUp((UserDto) accountDto, userService);
             } else if (accountDto instanceof SuperAdminDto) {
                 authService.signUp((SuperAdminDto) accountDto, adminService);
             } else {
-                // 추가적인 계정 유형이 있을 경우 여기서 처리
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("알 수 없는 계정 유형입니다.");
             }
 
@@ -57,6 +60,7 @@ public class AuthController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
+            log.error("회원가입 중 오류가 발생했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 중 오류가 발생했습니다.");
         }
     }
