@@ -1,9 +1,9 @@
 package com.example.DWTransferScoutProject.user.entity;
 
-import com.example.DWTransferScoutProject.address.entity.Address;
 import com.example.DWTransferScoutProject.auction.entity.Auction;
 import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
 import com.example.DWTransferScoutProject.common.account.entity.BaseAccount;
+import com.example.DWTransferScoutProject.playertransfer.entity.PlayerTransfer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,15 +46,15 @@ public class User implements BaseAccount {
     @OneToMany(mappedBy = "user") // 수정된 부분
     private List<Auction> auctions;
 
+    @OneToMany(mappedBy = "user")
+    private List<PlayerTransfer> playerTransfers;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
+
 
     @Builder
     public User(ApplicationRoleEnum accountType, String accountId, String username, String password,
-                String birthdate, GenderEnum gender, String email, String contact, Address address) {
+                String birthdate, GenderEnum gender, String email, String contact) {
         this.accountType = accountType;
         this.accountId = accountId;
         this.username = username;
@@ -63,16 +63,14 @@ public class User implements BaseAccount {
         this.gender = gender;
         this.email = email;
         this.contact = contact;
-        this.address = address;
     }
 
-    public void updateUserInfo(String username, String birthdate, GenderEnum gender, String userEmail, String contact, Address address) {
+    public void updateUserInfo(String username, String birthdate, GenderEnum gender, String userEmail, String contact) {
         if (username != null) this.username = username;
         if (birthdate != null) this.birthdate = birthdate;
         if (gender != null) this.gender = gender;
         if (userEmail != null) this.email = userEmail;
         if (contact != null) this.contact = contact;
-        if (address != null) this.address = address;
     }
 
     @Override

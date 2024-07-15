@@ -1,8 +1,5 @@
 package com.example.DWTransferScoutProject.user.service;
 
-import com.example.DWTransferScoutProject.address.dto.AddressDto;
-import com.example.DWTransferScoutProject.address.entity.Address;
-import com.example.DWTransferScoutProject.address.service.AddressService;
 import com.example.DWTransferScoutProject.auth.security.ApplicationRoleEnum;
 import com.example.DWTransferScoutProject.auth.service.AuthService;
 import com.example.DWTransferScoutProject.common.account.service.BaseAccountService;
@@ -24,7 +21,6 @@ public class UserService implements BaseAccountService<User, UserDto> {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AddressService addressService;
     private final AuthService authService;
 
     // 회원가입 메서드
@@ -63,11 +59,6 @@ public class UserService implements BaseAccountService<User, UserDto> {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // AddressDto를 Address 엔티티로 변환
-        Address address = null;
-        if (userDto.getAddress() != null) {
-            address = addressService.saveAddress(userDto.getAddress()); // AddressService의 메서드 사용
-        }
 
         // 엔티티의 업데이트 메서드를 사용하여 정보 변경
         existingUser.updateUserInfo(
@@ -75,8 +66,8 @@ public class UserService implements BaseAccountService<User, UserDto> {
                 userDto.getBirthdate(),
                 userDto.getGender(),
                 userDto.getEmail(),
-                userDto.getContact(),
-                address
+                userDto.getContact()
+
         );
 
         if (userDto.getAccountType() != null) {
@@ -131,7 +122,6 @@ public class UserService implements BaseAccountService<User, UserDto> {
                 .gender(user.getGender())
                 .email(user.getEmail())
                 .contact(user.getContact())
-                .address(user.getAddress() != null ? new AddressDto(user.getAddress()) : null)
                 .accountType(user.getAccountType())
                 .build();
     }

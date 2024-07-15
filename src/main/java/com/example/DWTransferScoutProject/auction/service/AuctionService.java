@@ -9,6 +9,7 @@ import com.example.DWTransferScoutProject.common.account.entity.BaseAccount;
 import com.example.DWTransferScoutProject.user.dto.UserDto;
 import com.example.DWTransferScoutProject.user.entity.User;
 import com.example.DWTransferScoutProject.user.repository.UserRepository;
+import com.example.DWTransferScoutProject.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class AuctionService {
 
 private final AuctionRepository auctionRepository;
 private final UserRepository userRepository;
+private final UserService userService;
 
 
 public AuctionDto createAuction(AuctionDto auctionDto, AccountDetailsImpl accountDetails) {
@@ -69,8 +71,7 @@ public AuctionDto createAuction(AuctionDto auctionDto, AccountDetailsImpl accoun
 
             User user = userRepository.findById(auction.getUser().getId()).orElse(null);
             if (user != null) {
-                UserDto userDto = new UserDto();
-                userDto.setAccountId(user.getAccountId());
+                UserDto userDto = userService.mapToDTO(user);
                 auctionDto.setUserDto(userDto);
             } else {
                 // 처리할 회원이 없는 경우에 대한 예외 처리
@@ -94,10 +95,7 @@ public AuctionDto createAuction(AuctionDto auctionDto, AccountDetailsImpl accoun
         auctionDto.setDeadline(auction.getDeadline());
         auctionDto.setTransferFee(auction.getTransferFee());
 
-        User user = auction.getUser();
-        UserDto userDto = new UserDto();
-        userDto.setAccountId(user.getAccountId());
-
+        UserDto userDto = userService.mapToDTO(auction.getUser());
         auctionDto.setUserDto(userDto);
 
         return auctionDto;

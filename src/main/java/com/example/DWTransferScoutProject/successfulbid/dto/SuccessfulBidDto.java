@@ -1,6 +1,7 @@
 package com.example.DWTransferScoutProject.successfulbid.dto;
 
 import com.example.DWTransferScoutProject.auction.dto.AuctionDto;
+import com.example.DWTransferScoutProject.user.dto.UserDto;
 import com.example.DWTransferScoutProject.user.entity.User;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import lombok.*;
 public class SuccessfulBidDto {
     private Long id;
     private AuctionDto auctionDto;
-    private User user;
+    private UserDto userDto;
     private Long auctionId;
     private Long bidUserId;
 }
